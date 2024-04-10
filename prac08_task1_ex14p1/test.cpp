@@ -1,9 +1,9 @@
-import <iostream>;
-import <exception>;
-import <vector>;
-//#include <iostream>
-//#include <exception>
-//#include <vector>
+// import <iostream>;
+// import <exception>;
+// import <vector>;
+#include <iostream>
+#include <exception>
+#include <vector>
 
 using namespace std;
 
@@ -29,7 +29,7 @@ void processData(const vector<int> &data)
         // Write message on standard error output.
         cerr << "Invalid number of data points in dataset. Aborting." << endl;
         // And rethrow the exception.
-        throw caughtException;
+        throw;
     }
     // Verify for negative datapoints.
     for (auto &value : data)
@@ -43,15 +43,20 @@ int main()
 {
     try
     {
-        vector data{1, 2, 3, -5, 6, 9};
+        // vector data{1, 2, 3, -5, 6, 9};
+        // vector data{1, 3, 5, 7, 9};
+        vector data {1, 2, 3, 4, 5, 6, 7, 8, 9};
         processData(data);
     }
+
+     catch (const domain_error &caughtException)
+    {
+        cerr << "domain_error: " << caughtException.what() << endl;
+    }
+
     catch (const logic_error &caughtException)
     {
         cerr << "logic_error: " << caughtException.what() << endl;
     }
-    catch (const domain_error &caughtException)
-    {
-        cerr << "domain_error: " << caughtException.what() << endl;
-    }
+   
 }
