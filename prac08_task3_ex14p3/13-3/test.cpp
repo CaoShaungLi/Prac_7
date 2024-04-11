@@ -1,6 +1,10 @@
-import person;
-import person_database;
-import <iostream>;
+// import person;
+// import person_database;
+// import <iostream>;
+#include "Person.h"
+#include "Database.h"
+#include <iostream>
+#include <format>
 
 using namespace std;
 
@@ -14,7 +18,8 @@ int main()
 
 	// Output all persons in the database to standard output.
 	cout << "Initial database contents:" << endl;
-	db.outputAll(cout);
+	cout << db;
+	// db.outputAll(cout);
 
 	// Save the database to a file.
 	db.save("person.db");
@@ -22,11 +27,13 @@ int main()
 	// Clear the database.
 	db.clear();
 	cout << "\nDatabase contents after clearing:" << endl;
-	db.outputAll(cout);
+	cout << db;
+	// db.outputAll(cout);
 	
 	// Load database from file.
 	cout << "\nLoading database from file..." << endl;
 	db.load("person.db");
 	cout << "\nDatabase contents after loading from file:" << endl;
-	db.outputAll(cout);
+	cout << db;
+	// db.outputAll(cout);
 }
