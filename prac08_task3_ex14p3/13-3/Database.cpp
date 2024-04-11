@@ -27,11 +27,14 @@ void Database::clear()
 void Database::save(string_view filename) const
 {
 	ofstream outFile{filename.data(), ios_base::trunc};
-	if (!outFile)
-	{
-		cerr << "Cannot open file: " << filename << endl;
-		return;
-	}
+	// if (!outFile)
+	// {
+	// 	cerr << "Cannot open file: " << filename << endl;
+	// 	return;
+	// }
+	if (!outFile) {
+    throw runtime_error{"Cannot open file: " + string{filename.data()} + "."};
+}
 
 	for (const auto &person : m_persons)
 	{
@@ -41,22 +44,29 @@ void Database::save(string_view filename) const
 		outFile << quoted(person.getFirstName())
 				<< quoted(person.getLastName())
 				<< quoted(person.getInitials()) << endl;
+		if (!outFile) {
+			throw runtime_error{ "Cannot write person to file." };
+		}
 	}
 }
 
 void Database::load(string_view filename)
 {
 	ifstream inFile{filename.data()};
-	if (!inFile)
-	{
-		cerr << "Cannot open file: " << filename << endl;
-		return;
+	// if (!inFile)
+	// {
+	// 	cerr << "Cannot open file: " << filename << endl;
+	// 	return;
+	// }
+	if (!inFile) {
+		throw runtime_error{"Cannot open file: {}." + string{filename.data()} + "." };
 	}
 
 	while (inFile)
 	{
 		// Read line by line, so we can skip empty lines.
 		// The last line in the file is empty, for example.
+		
 		string line;
 		getline(inFile, line);
 		if (line.empty())
@@ -68,7 +78,7 @@ void Database::load(string_view filename)
 		istringstream inLine{line};
 		string firstName, lastName, initials;
 		inLine >> quoted(firstName) >> quoted(lastName) >> quoted(initials);
-		if (inLine.bad())
+		if (inLine.fail())
 		{
 			cerr << "Error reading person. Ignoring." << endl;
 			continue;
